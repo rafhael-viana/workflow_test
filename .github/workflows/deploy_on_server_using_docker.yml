@@ -34,7 +34,8 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ env.IMAGE_NAME }}:${{ env.TAG }}
+          tags: |
+            ${{ env.IMAGE_NAME }}:${{ env.TAG }}
             ${{ env.IMAGE_NAME }}:${{ github.sha }}
 
       - name: Deploy via SSH (docker compose pull + up)
@@ -44,7 +45,8 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT || 22 }}
-          script: set -e
+          script: |
+            set -e
             cd "${{ secrets.APP_DIR }}"
             docker compose pull
             docker compose up -d
