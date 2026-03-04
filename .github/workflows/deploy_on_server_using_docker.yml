@@ -49,6 +49,12 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
+      - name: Debug secrets
+        run: |
+          echo "HOST is set: ${{ secrets.SSH_HOST != '' }}"
+          echo "USER is set: ${{ secrets.SSH_USER != '' }}"
+          echo "KEY is set: ${{ secrets.SSH_KEY != '' }}"
+
       - name: Deploy via SSH (docker compose pull + up)
         uses: appleboy/ssh-action@v1.0.3
         with:
